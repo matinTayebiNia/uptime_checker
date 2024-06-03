@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('websites', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
-            $table->string("url");
+            $table->string("url")->unique();
             $table->boolean("isHttps")->default(0);
             $table->string("ping");
             $table->boolean("status");
