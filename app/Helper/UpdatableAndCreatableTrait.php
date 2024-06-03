@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 trait UpdatableAndCreatableTrait
 {
-    //
-    //
-    //
     public static function bootCreatable()
     {
         if (Auth::check()) {

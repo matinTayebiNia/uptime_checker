@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Website extends Model
 {
-    use HasFactory,UpdatableAndCreatableTrait;
+    use HasFactory, UpdatableAndCreatableTrait;
 
     protected $fillable = [
         "name",
@@ -30,5 +30,10 @@ class Website extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status == true ? "up" : "down";
     }
 }
