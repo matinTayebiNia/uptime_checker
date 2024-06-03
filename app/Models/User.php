@@ -21,6 +21,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        "phone",
+        "notification_type"
     ];
 
     /**
@@ -45,6 +47,7 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -62,6 +65,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims(): array
     {
-        return ["email"];
+        return ["email", "id", "name"];
     }
 }
