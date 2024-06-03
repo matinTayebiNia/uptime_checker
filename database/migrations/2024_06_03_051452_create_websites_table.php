@@ -21,6 +21,11 @@ return new class extends Migration {
             $table->boolean("checked")->default(0);
             $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->foreignId("created_by_id")->nullable()->constrained("users")
+                ->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId("updated_by_id")->nullable()->constrained("users")
+                ->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

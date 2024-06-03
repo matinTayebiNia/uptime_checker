@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Helper\UpdatableAndCreatableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use  HasFactory, Notifiable, HasRoles;
+    use  HasFactory, Notifiable, HasRoles, UpdatableAndCreatableTrait;
 
     /**
      * The attributes that are mass assignable.
