@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    "smsIr"=>[
+        "line_number"=>env("SMSIR_LINE_NUMBER"),
+        "api_key"=>env("SMSIR_API_KEY"),
+    ]
+
 ];
