@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a980a7402341b3bbc4afbfd4a02da88",
+    "content-hash": "87dcce36a5476270a9e7a7363359f5c9",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,69 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "cryptommer/smsir",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cryptommer/smsir.git",
+                "reference": "9ff32626694852c7f5dbea4c14b504cdbfab5e47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cryptommer/smsir/zipball/9ff32626694852c7f5dbea4c14b504cdbfab5e47",
+                "reference": "9ff32626694852c7f5dbea4c14b504cdbfab5e47",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "*",
+                "illuminate/support": "*",
+                "php": "^7.0|^8"
+            },
+            "require-dev": {
+                "orchestra/testbench": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Cryptommer\\Smsir\\SmsirServiceProvider"
+                    ],
+                    "aliases": {
+                        "Smsir": "Smsir"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cryptommer\\Smsir\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pouya Biglari",
+                    "email": "cyberman9000@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Official sms.ir New Panel laravel repository",
+            "homepage": "https://github.com/cryptommer/Smsir",
+            "keywords": [
+                "cryptommer",
+                "smsir"
+            ],
+            "support": {
+                "issues": "https://github.com/cryptommer/smsir/issues",
+                "source": "https://github.com/cryptommer/smsir/tree/v1.1.3"
+            },
+            "time": "2023-12-26T14:46:40+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
