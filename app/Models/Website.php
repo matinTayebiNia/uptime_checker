@@ -31,7 +31,7 @@ class Website extends Model
     }
 
     /**
-     * this scope for set some query on website resources by passing query strings in url
+     * this scope set some query on website resources by passing query strings in url
      *
      * @param Builder $query
      * @return Builder
@@ -54,13 +54,11 @@ class Website extends Model
                 })
                 //filter by https
                 ->when(request()->has("https"), function (Builder $query) {
-                    $bool = (boolean)request("https");
-                    return $query->where("https", $bool);
+                    return $query->where("https", request("https"));
                 })
                 //filter by status
                 ->when(request()->has("status"), function (Builder $query) {
-                    $bool = (boolean)request("status");
-                    return $query->where("status", $bool);
+                    return $query->where("status", request("status"));
                 });
     }
 

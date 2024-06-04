@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\website;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -18,13 +18,13 @@ class UpdateWebsiteRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
             "name" => ["nullable", "string", "max:225"],
-            "url" => ["required", Rule::unique("websites")->ignore($this->route("website_id"))]
+            "url" => ["required", Rule::unique("websites")->ignore($this->route("website"))]
         ];
     }
 }
