@@ -14,8 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->enum('notification_type', ["email", "sms", "both"])->default("email");
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

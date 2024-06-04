@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use  HasFactory, Notifiable, HasRoles, UpdatableAndCreatableTrait;
+    use  HasFactory, Notifiable, UpdatableAndCreatableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +23,6 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        "phone",
-        "notification_type"
     ];
 
     /**
@@ -69,10 +66,5 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return ["email", "id", "name"];
-    }
-
-    public function websites(): HasMany
-    {
-        return $this->hasMany(Website::class);
     }
 }

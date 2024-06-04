@@ -24,14 +24,6 @@ class Website extends Model
         "status"
     ];
 
-    /**
-     * getting info of user owner website
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function getStatus(): string
     {
         return $this->status == true ? "up" : "down";

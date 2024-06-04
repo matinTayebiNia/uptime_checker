@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\website\StoreWebsiteRequest;
 use App\Http\Resources\website\WebsiteResources;
+use App\Models\Website;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
@@ -13,7 +15,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        $websites = auth()->user()->websites()->paginate();
+        $websites = Website::paginate();
 
         return WebsiteResources::collection($websites);
     }
@@ -21,9 +23,9 @@ class WebsiteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreWebsiteRequest $request)
     {
-        //
+
     }
 
     /**
