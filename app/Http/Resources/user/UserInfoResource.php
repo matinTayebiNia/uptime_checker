@@ -19,8 +19,7 @@ class UserInfoResource extends JsonResource
             "user" => [
                 "id" => $this->id,
                 "name" => $this->name,
-                "email" => $this->email,
-                "phone" => $this->phone
+                "email" => $this->email
             ]
         ];
     }
