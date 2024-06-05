@@ -13,6 +13,7 @@ class UptimeCheckFailed
 
     /**
      * Create a new event instance.
+     * This class is called when a website request has failed
      */
     public function __construct
     (public Website $website, public string $errorMessage)

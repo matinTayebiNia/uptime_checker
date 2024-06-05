@@ -15,7 +15,7 @@ class UptimeSettingSeeder extends Seeder
     {
         UptimeSetting::create([
             "app_name"=>"uptime checker",
-            "check_per_minute"=>1000,
+            "check_per_minute"=>100,
         ]);
     }
 }
