@@ -2,12 +2,12 @@
 
 namespace App\Notifications;
 
+use App\Broadcasting\SmsChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailNotification extends Notification
+class SendFailedMessageNotification extends Notification
 {
     use Queueable;
 
@@ -26,17 +26,24 @@ class EmailNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return getSetting()->notification_type == "sms" ? [SmsChannel::class] : ["email"];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
+    public function toSms(object $notifiable): array
+    {
+        //todo create  message text
+        return [
+            "message" => '',
+            "phone" => env("SMS")
+        ];
+    }
+
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->line('Thank you for using our application!');
     }
+
 
 }
