@@ -21,8 +21,7 @@ class LogSuccessFull
     public function handle(UptimeCheckSuccess $event): void
     {
         $website = $event->website;
-        $url = $website->url;
-        $message = "the {$url} checked successfully";
+        $message = "the {$website->url} checked successfully";
         Log::channel("uptime_success")->info($message, [
             "id" => $website->id,
             "isHttps" => $website->isHttps,
