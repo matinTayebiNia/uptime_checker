@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->boolean("isHttps")->default(0);
             $table->string("ping")->nullable();
             $table->boolean("status")->nullable();
-            $table->boolean("checked")->default(0);
+            $table->timestamp("date_check");
             $table->foreignId("created_by_id")->nullable()->constrained("users")
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("updated_by_id")->nullable()->constrained("users")

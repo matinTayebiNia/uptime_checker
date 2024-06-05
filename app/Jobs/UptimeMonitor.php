@@ -30,19 +30,19 @@ class UptimeMonitor implements ShouldQueue
             } catch (ConnectionException $exception) {
                 $this->runFailedEvent($uncheckedWebsite, $exception->getMessage());
             }
-            $uncheckedWebsite->checked = 1;
             $uncheckedWebsite->save();
         }
     }
 
     /**
+     * getting data by date_check
+     *
      * @return Collection|array
      */
     private function getUncheckedWebsites(): Collection|array
     {
-        return Website::where('date_check', "<=", now())
-            ->where("date_check", ">", now()->addMinutes(2))
-            ->orderBy("id")->get();
+        // getting data From now until the next two minutes
+        return Website::getFromNowUntil2MinutesLater()->get();
     }
 
     /**
@@ -107,6 +107,8 @@ class UptimeMonitor implements ShouldQueue
         $website->status = false;
         $website->ping = "-1ms";
         $website->isHttps = false;
+        // dispatch UptimeCheckFailed event for
+        //  calling LogFailed and SendFailedMessage listener
         UptimeCheckFailed::dispatch($website, $messageException);
     }
 }

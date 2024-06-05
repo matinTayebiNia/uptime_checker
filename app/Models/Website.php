@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static Builder where(string $column, $op,$condition)
+ * @method static Builder getFromNowUntil2MinutesLater()
  * @method static Builder search()
  * @method static $this find(string $id)
  */
@@ -21,7 +21,7 @@ class Website extends Model
         "url",
         "isHttps",
         "ping",
-        "checked",
+        "date_check",
         "status"
     ];
 
@@ -43,8 +43,8 @@ class Website extends Model
             $query->when(
                 $this->checkDateQueryStringsExists()
                 , function (Builder $query) {
-                return $query->whereDate("created_at", '>=', request("date_start"))
-                    ->whereDate("created_at", '<=', request("date_end"));
+                return $query->where("created_at", '>=', request("date_start"))
+                    ->where("created_at", '<=', request("date_end"));
             })
                 //search with url or name
                 ->when(request()->has("search"), function (Builder $query) {
@@ -69,5 +69,11 @@ class Website extends Model
     public function checkDateQueryStringsExists(): bool
     {
         return request()->has("date_start") && request()->has("date_end");
+    }
+
+    public function scopeGetFromNowUntil2MinutesLater(Builder $q): Builder
+    {
+        return $q->where('date_check', "<=", now())
+            ->where("date_check", ">=", now()->addMinutes(2));
     }
 }
