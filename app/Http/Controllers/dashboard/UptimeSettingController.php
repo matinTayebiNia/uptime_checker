@@ -6,20 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UptimeSettingRequest;
 use App\Http\Resources\UptimeResource;
 use App\Models\UptimeSetting;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class UptimeSettingController extends Controller
 {
-    public function index()
+    public function index(): UptimeResource|JsonResponse
     {
         try {
             $setting = UptimeSetting::first();
             return UptimeResource::make($setting);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json(["data" => "error"], 500);
         }
     }
 
-    public function update(UptimeSettingRequest $request)
+    public function update(UptimeSettingRequest $request): UptimeResource|JsonResponse
     {
         try {
             $setting = UptimeSetting::first();
@@ -28,8 +30,8 @@ class UptimeSettingController extends Controller
 
             return UptimeResource::make($setting);
 
-        } catch (\Exception $exception) {
-            response()->json(["data" => "error"], 500);
+        } catch (Exception $exception) {
+            return response()->json(["data" => "error"], 500);
         }
     }
 }
