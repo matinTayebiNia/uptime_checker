@@ -135,7 +135,12 @@ return [
             "driver" => "single",
             "path" => storage_path("logs/uptimeFailed.log"),
             'level' => env('LOG_LEVEL', 'debug'),
-        ]
+        ],
+        "website" => [
+            "driver" => "single",
+            "path" => storage_path("logs/website.log"),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
     ],
 
 ];

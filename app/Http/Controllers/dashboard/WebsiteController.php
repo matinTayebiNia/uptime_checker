@@ -10,6 +10,7 @@ use App\Models\Website;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 class WebsiteController extends Controller
 {
@@ -23,6 +24,7 @@ class WebsiteController extends Controller
 
             return WebsiteResources::collection($websites);
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return response()->json(["data" => "error"], 500);
         }
     }
@@ -33,11 +35,14 @@ class WebsiteController extends Controller
     public function store(StoreWebsiteRequest $request): JsonResponse
     {
         try {
-            Website::create($request->validated());
+          $website =   Website::create($request->validated());
+
+            Log::channel("website")->info("{$website->url} added to system");
 
             return response()->json(["data" => "website added "]);
 
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return response()->json(["data" => "error"], 500);
         }
     }
@@ -68,6 +73,9 @@ class WebsiteController extends Controller
 
             if ($website) {
                 $website->update($request->validated());
+                Log::channel("website")
+                    ->info("{$website->url} updated");
+
                 return response()->json(["data" => "website updated"]);
             }
 
@@ -87,6 +95,8 @@ class WebsiteController extends Controller
 
             $website = Website::find($id);
             if ($website) {
+                Log::channel("website")
+                    ->info("{$website->url} deleted from system");
                 $website->delete();
                 return response()->json(["data" => "website deleted"]);
             }

@@ -20,7 +20,8 @@ class SendFailedMessageNotification extends Notification implements ShouldQueue
     public function __construct
     (private string $url, private string $errorMessage)
     {
-        $this->message = "failed to load {$this->url}. \n error message:{$this->errorMessage}";
+        $error = substr($this->errorMessage, 0, 300);
+        $this->message = "failed to load {$this->url}. \n error message:{$error}";
     }
 
     /**
@@ -30,7 +31,7 @@ class SendFailedMessageNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return getSetting()->notification_type == "sms" ? [SmsChannel::class] : ["mail"];
+        return $this->getChannelByNotificationType();
     }
 
     public function toSms(object $notifiable): array
@@ -46,6 +47,14 @@ class SendFailedMessageNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->line($this->message)
             ->line('Thank you for using our application!');
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getChannelByNotificationType(): array
+    {
+        return env("NOTIFICATION_TYPE") == "sms" ? [SmsChannel::class] : ["mail"];
     }
 
 

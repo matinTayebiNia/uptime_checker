@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static Builder where(string $column, $op)
+ * @method static Builder where(string $column, $op,$condition)
  * @method static Builder search()
  * @method static $this find(string $id)
  */

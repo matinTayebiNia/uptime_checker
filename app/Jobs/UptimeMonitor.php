@@ -40,16 +40,9 @@ class UptimeMonitor implements ShouldQueue
      */
     private function getUncheckedWebsites(): Collection|array
     {
-        $websites = Website::where('checked', 0)
-            ->limit(getSetting()->check_per_minute)
+        return Website::where('date_check', "<=", now())
+            ->where("date_check", ">", now()->addMinutes(2))
             ->orderBy("id")->get();
-
-        if ($websites->count() == 0) {
-            Website::query()->update(["checked" => 0]);
-            $websites = $this->getUncheckedWebsites();
-        }
-
-        return $websites;
     }
 
     /**
@@ -63,7 +56,7 @@ class UptimeMonitor implements ShouldQueue
         try {
             $g = stream_context_create(array("ssl" => array("capture_peer_cert" => true)));
             $r = fopen($domain, "rb", false, $g);
-            $result=false;
+            $result = false;
             $cont = stream_context_get_params($r);
             if (array_key_exists("peer_certificate", $cont["options"]["ssl"]))
                 $result = openssl_x509_export($cont["options"]["ssl"]["peer_certificate"], $cert);

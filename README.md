@@ -4,7 +4,7 @@
 
 ## installation
 
-after download project, run this command in terminal
+after download project, run this command in terminal.
 
 ```
 compoer install 
