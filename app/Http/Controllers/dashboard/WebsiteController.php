@@ -118,6 +118,6 @@ class WebsiteController extends Controller
      */
     private function getValidFormat(mixed $request): CarbonImmutable|Carbon|Creator|null
     {
-        return Carbon::createFromFormat("h:00", $request->date_check);
+        return Carbon::createFromFormat("H:00", $request->date_check);
     }
 }

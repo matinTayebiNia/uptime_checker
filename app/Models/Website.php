@@ -81,8 +81,8 @@ class Website extends Model
 
     public function scopeGetWebsitesByHourlyDateCheck(Builder $q): Builder
     {
-        $now = now()->format("h:00");
-        return $q->where('date_check', "LIKE", "%{$now}%");
+        $now = now()->format("h:00:00");
+        return $q->where('date_check', "LIKE", "%{$now}");
     }
 
     /**

@@ -25,7 +25,7 @@ class UpdateWebsiteRequest extends FormRequest
         return [
             "name" => ["nullable", "string", "max:225"],
             "url" => ["required", Rule::unique("websites")->ignore($this->route("website"))],
-            "date_check" => ["required", "date_format:h:i"]
+            "date_check" => ["required", "date_format:H:i"]
         ];
     }
 }
