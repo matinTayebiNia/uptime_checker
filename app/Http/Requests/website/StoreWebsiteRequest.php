@@ -24,7 +24,8 @@ class StoreWebsiteRequest extends FormRequest
 
         return [
             "name" => ["nullable", "string", "max:225"],
-            "url" => ["required", "unique:websites"]
+            "url" => ["required", "unique:websites"],
+            "date_check" => ["required", "date_format:h:i"]
         ];
     }
 }

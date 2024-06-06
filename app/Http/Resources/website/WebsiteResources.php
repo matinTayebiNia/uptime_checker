@@ -15,12 +15,13 @@ class WebsiteResources extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"=>$this->id,
-            "name"=>$this->name,
-            "url"=>$this->url,
-            "isHttps"=>$this->isHttps,
-            "ping"=>$this->ping,
-            "status"=>$this->getStatus()
+            "id" => $this->id,
+            "name" => $this->name,
+            "url" => $this->url,
+            "isHttps" => $this->isHttps,
+            "ping" => $this->ping,
+            "date_check" => $this->getFormatDateCheck(),
+            "status" => $this->getStatus()
         ];
     }
 

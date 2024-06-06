@@ -7,6 +7,9 @@ use App\Http\Requests\website\StoreWebsiteRequest;
 use App\Http\Requests\website\UpdateWebsiteRequest;
 use App\Http\Resources\website\WebsiteResources;
 use App\Models\Website;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Carbon\Traits\Creator;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -34,8 +37,10 @@ class WebsiteController extends Controller
      */
     public function store(StoreWebsiteRequest $request): JsonResponse
     {
+
         try {
-          $website =   Website::create($request->validated());
+            $request->date_check = $this->getValidFormat($request);
+            $website = Website::create($request->validated());
 
             Log::channel("website")->info("{$website->url} added to system");
 
@@ -72,6 +77,7 @@ class WebsiteController extends Controller
             $website = Website::find($id);
 
             if ($website) {
+                $request->date_check = $this->getValidFormat($request);
                 $website->update($request->validated());
                 Log::channel("website")
                     ->info("{$website->url} updated");
@@ -104,5 +110,14 @@ class WebsiteController extends Controller
         } catch (Exception $exception) {
             return response()->json(["data" => "error"], 500);
         }
+    }
+
+    /**
+     * @param UpdateWebsiteRequest $request
+     * @return Carbon|CarbonImmutable|Creator|null
+     */
+    private function getValidFormat(mixed $request): CarbonImmutable|Carbon|Creator|null
+    {
+        return Carbon::createFromFormat("h:00", $request->date_check);
     }
 }

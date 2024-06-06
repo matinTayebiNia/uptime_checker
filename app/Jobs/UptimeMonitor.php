@@ -20,14 +20,19 @@ class UptimeMonitor implements ShouldQueue
 
     /**
      * Execute the job.
+     * check website is up or not
+     *
      * @throws ConnectionException
      */
     public function handle(): void
     {
-        foreach ($this->getUncheckedWebsites() as $uncheckedWebsite) {
+        // each every website
+        foreach ($this->getWebsites() as $uncheckedWebsite) {
             try {
+                // checking  website status and update website detail
                 $this->checkWebsiteIsUp($uncheckedWebsite);
             } catch (ConnectionException $exception) {
+                //  update website detail and run failed event
                 $this->runFailedEvent($uncheckedWebsite, $exception->getMessage());
             }
             $uncheckedWebsite->save();
@@ -39,10 +44,10 @@ class UptimeMonitor implements ShouldQueue
      *
      * @return Collection|array
      */
-    private function getUncheckedWebsites(): Collection|array
+    private function getWebsites(): Collection|array
     {
-        // getting data From now until the next two minutes
-        return Website::getFromNowUntil2MinutesLater()->get();
+        // getting websites By Hourly Date Check
+        return Website::getWebsitesByHourlyDateCheck()->get();
     }
 
     /**
@@ -90,6 +95,8 @@ class UptimeMonitor implements ShouldQueue
             $this->has_ssl($uncheckedWebsite->url) ?
                 $uncheckedWebsite->isHttps = true :
                 $uncheckedWebsite->isHttps = false;
+            // dispatch UptimeCheckSuccess event for
+            //  calling LogSuccess and SendFailedMessage listener
             UptimeCheckSuccess::dispatch($uncheckedWebsite);
         }
     }

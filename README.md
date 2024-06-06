@@ -12,7 +12,7 @@ compoer install
  create database and migrate the migrations.
 ```
 php artisan init:db  
-php artisan migrate --seed 
+php artisan migrate 
 ```
 after that run this command for generate jwt secret key.
 ```
