@@ -94,8 +94,8 @@ class Website extends Model
     private function convertToTimeFormatDate(): array
     {
         try {
-            $dateStart = Carbon::createFromFormat("h:00", request("date_start"));
-            $dateEnd = Carbon::createFromFormat("h:00", request("date_end"));
+            $dateStart = Carbon::createFromFormat("H:00", request("date_start"));
+            $dateEnd = Carbon::createFromFormat("H:00", request("date_end"));
             return array($dateStart, $dateEnd);
         } catch (\Exception $exception) {
             throw new $exception;
