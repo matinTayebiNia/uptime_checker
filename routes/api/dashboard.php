@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\dashboard\UptimeSettingController;
 use App\Http\Controllers\dashboard\WebsiteController;
 use Illuminate\Support\Facades\Route;
 

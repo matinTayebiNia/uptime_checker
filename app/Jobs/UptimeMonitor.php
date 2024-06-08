@@ -56,7 +56,7 @@ class UptimeMonitor implements ShouldQueue
      * @param $domain
      * @return bool
      */
-    function has_ssl($domain): bool
+    public function hasSsl($domain): bool
     {
         try {
             $g = stream_context_create(array("ssl" => array("capture_peer_cert" => true)));
@@ -92,11 +92,12 @@ class UptimeMonitor implements ShouldQueue
         if ($res->successful()) {
             $uncheckedWebsite->status = true;
             $uncheckedWebsite->ping = $this->getPing($res);
-            $this->has_ssl($uncheckedWebsite->url) ?
+            // checking ssl domain
+            $this->hasSsl($uncheckedWebsite->url) ?
                 $uncheckedWebsite->isHttps = true :
                 $uncheckedWebsite->isHttps = false;
             // dispatch UptimeCheckSuccess event for
-            //  calling LogSuccess and SendFailedMessage listener
+            //  calling LogSuccess listener
             UptimeCheckSuccess::dispatch($uncheckedWebsite);
         }
     }
