@@ -47,7 +47,7 @@ class Website extends Model
                 $this->checkDateQueryStringsExists()
                 , function (Builder $query) {
 
-                // convert value of query strings to (h:00) format date
+                // convert value of query strings to (H:00) format date
                 list($dateStart, $dateEnd) = $this->convertToTimeFormatDate();
 
                 // return date_check column  between date_start and date_end query
@@ -81,12 +81,12 @@ class Website extends Model
 
     public function scopeGetWebsitesByHourlyDateCheck(Builder $q): Builder
     {
-        $now = now()->format("h:00:00");
+        $now = now()->format("H:00:00");
         return $q->where('date_check', "LIKE", "%{$now}");
     }
 
     /**
-     * convert to h:00 format date
+     * convert to H:00 format date
      *
      * @return array
      * @throws \Exception

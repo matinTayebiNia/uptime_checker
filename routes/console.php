@@ -2,6 +2,7 @@
 
 use App\Jobs\UptimeMonitor;
 use Illuminate\Support\Facades\Schedule;
+
 /*
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
