@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static Builder getWebsitesByHourlyDateCheck()
+ * @method static Builder getWebsitesEveryMinute()
  * @method static Builder search()
  * @method static $this find(string $id)
  */
@@ -47,7 +47,7 @@ class Website extends Model
                 $this->checkDateQueryStringsExists()
                 , function (Builder $query) {
 
-                // convert value of query strings to (H:00) format date
+                // convert value of query strings to (H:i) format date
                 list($dateStart, $dateEnd) = $this->convertToTimeFormatDate();
 
                 // return date_check column  between date_start and date_end query
@@ -79,14 +79,14 @@ class Website extends Model
         return request()->has("date_start") && request()->has("date_end");
     }
 
-    public function scopeGetWebsitesByHourlyDateCheck(Builder $q): Builder
+    public function scopeGetWebsitesEveryMinute(Builder $q): Builder
     {
-        $now = now()->format("H:00:00");
-        return $q->where('date_check', "LIKE", "%{$now}");
+        $now = now()->format(config("app.format_time_checker"));
+        return $q->where('date_check', "LIKE", "%{$now}%");
     }
 
     /**
-     * convert to H:00 format date
+     * convert to H:i format date
      *
      * @return array
      * @throws \Exception
@@ -94,8 +94,8 @@ class Website extends Model
     private function convertToTimeFormatDate(): array
     {
         try {
-            $dateStart = Carbon::createFromFormat("H:00", request("date_start"));
-            $dateEnd = Carbon::createFromFormat("H:00", request("date_end"));
+            $dateStart = Carbon::createFromFormat(config("app.format_time_checker"), request("date_start"));
+            $dateEnd = Carbon::createFromFormat(config("app.format_time_checker"), request("date_end"));
             return array($dateStart, $dateEnd);
         } catch (\Exception $exception) {
             throw new $exception;
@@ -104,6 +104,6 @@ class Website extends Model
 
     public function getFormatDateCheck(): string
     {
-        return Carbon::parse($this->date_check)->format("H:i");
+        return Carbon::parse($this->date_check)->format(config("app.format_time_checker"));
     }
 }
