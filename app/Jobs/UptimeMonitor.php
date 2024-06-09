@@ -46,8 +46,8 @@ class UptimeMonitor implements ShouldQueue
      */
     private function getWebsites(): Collection|array
     {
-        // getting websites By Hourly Date Check
-        return Website::getWebsitesByHourlyDateCheck()->get();
+        // getting websites every minute
+        return Website::getWebsitesEveryMinute()->get();
     }
 
     /**
@@ -56,7 +56,7 @@ class UptimeMonitor implements ShouldQueue
      * @param $domain
      * @return bool
      */
-    public function hasSsl($domain): bool
+    private function hasSsl($domain): bool
     {
         try {
             $g = stream_context_create(array("ssl" => array("capture_peer_cert" => true)));
@@ -76,7 +76,7 @@ class UptimeMonitor implements ShouldQueue
      * @param mixed $res
      * @return string
      */
-    public function getPing(mixed $res): string
+    private function getPing(mixed $res): string
     {
         return round($res->handlerStats()["appconnect_time_us"] / 1000) . "ms";
     }
@@ -86,7 +86,7 @@ class UptimeMonitor implements ShouldQueue
      * @return void
      * @throws ConnectionException
      */
-    public function checkWebsiteIsUp(Website $uncheckedWebsite): void
+    private function checkWebsiteIsUp(Website $uncheckedWebsite): void
     {
         $res = Http::withoutVerifying()->get($uncheckedWebsite->url);
         if ($res->successful()) {

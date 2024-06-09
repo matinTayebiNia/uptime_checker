@@ -32,7 +32,7 @@ run this commands in terminal.
 php artisan schedule:work
 php artisan queue:work 
 ```
-uptime checker is checking website hourly
+uptime checker is checking website every minute
 
 ----------
 
